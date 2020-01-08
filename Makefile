@@ -5,33 +5,38 @@ BAUDRATE = 9600
 BAUDPROG = 115200
 PORT = /dev/ttyACM0
 
-SRC = src
-BIN = bin
-BUILD = build
-OBJECTS = $(wildcard $(BUILD)/*.o)
-
 AVRCC = avr-gcc -DF_CPU=$(CLOCK) -DBAUD=$(BAUDRATE) -mmcu=$(ATMEGA) -Os
 AVRDUDE = avrdude -v -p $(ATMEGA) -c $(PROGRAMMER) -P $(PORT) -b $(BAUDPROG)
 AVROBJCOPY = avr-objcopy -j .text -j .data
 
-all : prepare $(BIN)/lecture_voting.hex
+SRC = src
+BIN = bin
+BUILD = build
+
+OBJECTS = $(wildcard $(BUILD)/*.o)
+ELF_FILE = $(BIN)/lecture_voting.elf
+HEX_FILE = $(BIN)/lecture_voting.hex
+
+.PHONY : all clean dirs install refresh
+
+all : dirs $(HEX_FILE)
 
 clean :
 	rm -rf $(BUILD) $(BIN)
 
 refresh : clean all
 
-prepare :
+dirs :
 	mkdir -p $(BUILD) $(BIN)
 
 install : all
-	$(AVRDUDE) -U flash:w:$(BIN)/lecture_voting.hex:a
+	$(AVRDUDE) -U flash:w:$(HEX_FILE):a
 
 $(BUILD)/%.o : $(SRC)/%.c
 	$(AVRCC) -c $< -o $@
 
-$(BIN)/lecture_voting.elf : $(OBJECTS)
+$(ELF_FILE) : $(OBJECTS)
 	$(AVRCC) $^ -o $@
 
-$(BIN)/%.hex : $(BIN)/%.elf
+$(HEX_FILE) : $(ELF_FILE)
 	$(AVROBJCOPY) -O ihex $< $@
