@@ -5,17 +5,19 @@ BAUDRATE = 9600
 BAUDPROG = 115200
 PORT = /dev/ttyACM0
 
-AVRCC = avr-gcc -DF_CPU=$(CLOCK) -DBAUD=$(BAUDRATE) -mmcu=$(ATMEGA) -Os
-AVRDUDE = avrdude -v -p $(ATMEGA) -c $(PROGRAMMER) -P $(PORT) -b $(BAUDPROG)
-AVROBJCOPY = avr-objcopy -j .text -j .data
-
-SRC = src
 BIN = bin
 BUILD = build
+INC = include
+SRC = src
 
-OBJECTS = $(wildcard $(BUILD)/*.o)
+SOURCES = $(wildcard $(SRC)/*.c)
+OBJECTS = $(addprefix $(BUILD)/,$(notdir $(SOURCES:.c=.o)))
 ELF_FILE = $(BIN)/lecture_voting.elf
 HEX_FILE = $(BIN)/lecture_voting.hex
+
+AVRCC = avr-gcc -I$(INC) -DF_CPU=$(CLOCK) -DBAUD=$(BAUDRATE) -mmcu=$(ATMEGA) -Os
+AVRDUDE = avrdude -v -p $(ATMEGA) -c $(PROGRAMMER) -P $(PORT) -b $(BAUDPROG)
+AVROBJCOPY = avr-objcopy -j .text -j .data
 
 .PHONY : all clean dirs install refresh
 
