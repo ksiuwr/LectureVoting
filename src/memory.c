@@ -2,7 +2,7 @@
 
 int counts[3] = {0, 0, 0};
 
-void reset()
+void init_memory()
 {
     counts[Plus] = 0;
     counts[Minus] = 0;
