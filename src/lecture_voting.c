@@ -2,5 +2,7 @@
 
 int main()
 {
+    init_buttons();
+
     return 0;
 }

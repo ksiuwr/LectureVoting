@@ -19,7 +19,7 @@ AVRCC = avr-gcc -I$(INC) -DF_CPU=$(CLOCK) -DBAUD=$(BAUDRATE) -mmcu=$(ATMEGA) -Os
 AVRDUDE = avrdude -v -p $(ATMEGA) -c $(PROGRAMMER) -P $(PORT) -b $(BAUDPROG)
 AVROBJCOPY = avr-objcopy -j .text -j .data
 
-.PHONY : all clean dirs install refresh
+.PHONY : all clean dirs install refresh reinstall
 
 all : dirs $(HEX_FILE)
 
@@ -28,11 +28,13 @@ clean :
 
 refresh : clean all
 
-dirs :
-	mkdir -p $(BUILD) $(BIN)
-
 install : all
 	$(AVRDUDE) -U flash:w:$(HEX_FILE):a
+
+reinstall : refresh install
+
+dirs :
+	mkdir -p $(BUILD) $(BIN)
 
 $(BUILD)/%.o : $(SRC)/%.c
 	$(AVRCC) -c $< -o $@
