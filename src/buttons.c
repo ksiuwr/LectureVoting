@@ -11,74 +11,56 @@
 #define MINUS_PIN PB2
 #define EGAL_PIN PB3
 
+const int Mask = (1 << PLUS_PIN) | (1 << MINUS_PIN) | (1 << EGAL_PIN) | (1 << RESET_PIN);
 int Pressed = 0;
 
-void init_buttons()
+void btn_init()
 {
     BTN_DDR &= ~(1 << PLUS_PIN) & ~(1 << MINUS_PIN) & ~(1 << EGAL_PIN) & ~(1 << RESET_PIN);
     BTN_PORT |= (1 << PLUS_PIN) | (1 << MINUS_PIN) | (1 << EGAL_PIN) | (1 << RESET_PIN);
 }
 
-void on_plus()
+void btn_click()
 {
-    if(~BTN_PIN & (1 << PLUS_PIN))
+    switch(~BTN_PIN & Mask)
     {
-        if(~Pressed & (1 << PLUS_PIN))
-        {
-            Pressed |= (1 << PLUS_PIN);
-            /* code here */
-        }
-    }
-    else
-    {
-        Pressed &= ~(1 << PLUS_PIN);
-    }
-}
+        case 0:
+            Pressed = 0;
+            break;
 
-void on_minus()
-{
-    if(~BTN_PIN & (1 << MINUS_PIN))
-    {
-        if(~Pressed & (1 << MINUS_PIN))
-        {
-            Pressed |= (1 << MINUS_PIN);
-            /* code here */
-        }
-    }
-    else
-    {
-        Pressed &= ~(1 << MINUS_PIN);
-    }
-}
+        case 1 << PLUS_PIN:
+            if(~Pressed & (1 << PLUS_PIN))
+            {
+                Pressed = (1 << PLUS_PIN);
+                mem_increment(Plus);
+            }
+            break;
 
-void on_egal()
-{
-    if(~BTN_PIN & (1 << EGAL_PIN))
-    {
-        if(~Pressed & (1 << EGAL_PIN))
-        {
-            Pressed |= (1 << EGAL_PIN);
-            /* code here */
-        }
-    }
-    else
-    {
-        Pressed &= ~(1 << EGAL_PIN);
-    }
-}
+        case 1 << MINUS_PIN:
+            if(~Pressed & (1 << MINUS_PIN))
+            {
+                Pressed = (1 << MINUS_PIN);
+                mem_increment(Minus);
+            }
+            break;
 
-void on_reset()
-{
-    if(~BTN_PIN & (1 << RESET_PIN))
-    {
-        if(~Pressed & (1 << RESET_PIN))
-        {
-            Pressed |= (1 << RESET_PIN);
-            /* code here */
-        }
-    }
-    else
-    {
-        Pressed &= ~(1 << RESET_PIN);
+        case 1 << EGAL_PIN:
+            if(~Pressed & (1 << EGAL_PIN))
+            {
+                Pressed = (1 << EGAL_PIN);
+                mem_increment(Egal);
+            }
+            break;
+
+        case 1 << RESET_PIN:
+            if(~Pressed & (1 << RESET_PIN))
+            {
+                Pressed = (1 << RESET_PIN);
+                mem_init();
+            }
+            break;
+
+        default:
+            Pressed = 0;
     }
 }

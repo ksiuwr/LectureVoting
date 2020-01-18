@@ -8,8 +8,8 @@ typedef enum
     Egal = 2
 } vote;
 
-void init_memory();
-void increment(vote v);
-int total();
+void mem_init();
+void mem_increment(vote v);
+int mem_total();
 
 #endif

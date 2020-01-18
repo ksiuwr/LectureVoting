@@ -3,6 +3,6 @@
 
 #include "memory.h"
 
-void init_displayer();
+void disp_init();
 
 #endif

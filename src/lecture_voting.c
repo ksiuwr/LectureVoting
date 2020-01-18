@@ -2,7 +2,7 @@
 
 int main()
 {
-    init_buttons();
+    btn_init();
 
     return 0;
 }
