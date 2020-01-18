@@ -16,8 +16,8 @@ int Pressed = 0;
 
 void btn_init()
 {
-    BTN_DDR &= ~(1 << PLUS_PIN) & ~(1 << MINUS_PIN) & ~(1 << EGAL_PIN) & ~(1 << RESET_PIN);
-    BTN_PORT |= (1 << PLUS_PIN) | (1 << MINUS_PIN) | (1 << EGAL_PIN) | (1 << RESET_PIN);
+    BTN_DDR &= ~Mask;
+    BTN_PORT |= Mask;
 }
 
 void btn_click()
@@ -31,7 +31,7 @@ void btn_click()
         case 1 << PLUS_PIN:
             if(~Pressed & (1 << PLUS_PIN))
             {
-                Pressed = (1 << PLUS_PIN);
+                Pressed = 1 << PLUS_PIN;
                 mem_increment(Plus);
             }
             break;
@@ -39,7 +39,7 @@ void btn_click()
         case 1 << MINUS_PIN:
             if(~Pressed & (1 << MINUS_PIN))
             {
-                Pressed = (1 << MINUS_PIN);
+                Pressed = 1 << MINUS_PIN;
                 mem_increment(Minus);
             }
             break;
@@ -47,7 +47,7 @@ void btn_click()
         case 1 << EGAL_PIN:
             if(~Pressed & (1 << EGAL_PIN))
             {
-                Pressed = (1 << EGAL_PIN);
+                Pressed = 1 << EGAL_PIN;
                 mem_increment(Egal);
             }
             break;
@@ -55,12 +55,12 @@ void btn_click()
         case 1 << RESET_PIN:
             if(~Pressed & (1 << RESET_PIN))
             {
-                Pressed = (1 << RESET_PIN);
+                Pressed = 1 << RESET_PIN;
                 mem_init();
             }
             break;
 
         default:
-            Pressed = 0;
+            Pressed = Mask;
     }
 }
