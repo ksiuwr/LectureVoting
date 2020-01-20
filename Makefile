@@ -1,8 +1,8 @@
 ATMEGA = atmega328p
 PROGRAMMER = arduino
 CLOCK = 16000000UL
-BAUDRATE = 9600
-BAUDPROG = 115200
+UART_BAUD = 9600
+PROG_BAUD = 115200
 PORT = /dev/ttyACM0
 
 BIN = bin
@@ -15,8 +15,8 @@ OBJECTS = $(addprefix $(BUILD)/,$(notdir $(SOURCES:.c=.o)))
 ELF_FILE = $(BIN)/lecture_voting.elf
 HEX_FILE = $(BIN)/lecture_voting.hex
 
-AVRCC = avr-gcc -I$(INC) -DF_CPU=$(CLOCK) -DBAUD=$(BAUDRATE) -mmcu=$(ATMEGA) -Os
-AVRDUDE = avrdude -v -p $(ATMEGA) -c $(PROGRAMMER) -P $(PORT) -b $(BAUDPROG)
+AVRCC = avr-gcc -I$(INC) -DF_CPU=$(CLOCK) -DBAUD=$(UART_BAUD) -mmcu=$(ATMEGA) -Os
+AVRDUDE = avrdude -v -p $(ATMEGA) -c $(PROGRAMMER) -P $(PORT) -b $(PROG_BAUD)
 AVROBJCOPY = avr-objcopy -j .text -j .data
 
 .PHONY : all clean dirs install refresh reinstall

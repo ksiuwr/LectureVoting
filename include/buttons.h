@@ -1,5 +1,5 @@
-#ifndef _BUTTONS_H_
-#define _BUTTONS_H_
+#ifndef BUTTONS_H_
+#define BUTTONS_H_
 
 #include "memory.h"
 

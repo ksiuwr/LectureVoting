@@ -1,20 +1,25 @@
 #include "memory.h"
 
-int counts[3] = {0, 0, 0};
+memory counts = {0, 0, 0};
 
 void mem_init()
 {
-    counts[Plus] = 0;
-    counts[Minus] = 0;
-    counts[Egal] = 0;
+    counts.plus = 0;
+    counts.minus = 0;
+    counts.egal = 0;
 }
 
-void mem_increment(vote v)
+void mem_inc_plus()
 {
-    ++counts[v];
+    ++counts.plus;
 }
 
-int mem_total()
+void mem_inc_minus()
 {
-    return counts[Plus] + counts[Minus] + counts[Egal];
+    ++counts.minus;
+}
+
+void mem_inc_egal()
+{
+    ++counts.egal;
 }

@@ -1,15 +1,18 @@
-#ifndef _MEMORY_H_
-#define _MEMORY_H_
+#ifndef MEMORY_H_
+#define MEMORY_H_
 
-typedef enum
+#include <stdint.h>
+
+typedef struct
 {
-    Plus = 0,
-    Minus = 1,
-    Egal = 2
-} vote;
+    uint8_t plus;
+    uint8_t minus;
+    uint8_t egal;
+} memory;
 
 void mem_init();
-void mem_increment(vote v);
-int mem_total();
+void mem_inc_plus();
+void mem_inc_minus();
+void mem_inc_egal();
 
 #endif
