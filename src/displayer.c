@@ -4,11 +4,7 @@ const uint8_t ctrl_address = 0x38;
 
 void disp_init()
 {
-    /*
-    Prescaler == 1 (by default)
-    When TWBR == 152, then SCL frequency == 25 kHz
-    */
-
+    // Prescaler == 1 (by default) ; When TWBR == 152, then SCL frequency == 25 kHz
     i2c_init(152U);
 }
 

@@ -12,13 +12,8 @@ void i2c_wait()
 
 void i2c_init(uint8_t twbr)
 {
-    /*
-    Prescaler is set to 1 by default
-    SCL frequency = F_CPU / (16 + 2 * TWBR * Prescaler)
-    */
-
-    TWSR &= ~(1 << TWPS1) & ~(1 << TWPS0);
-    TWBR = twbr;
+    TWSR &= ~(1 << TWPS1) & ~(1 << TWPS0);  // Prescaler is set to 1 by default
+    TWBR = twbr;  // SCL frequency = F_CPU / (16 + 2 * TWBR * Prescaler)
     TWCR |= (1 << TWEN);
     TWCR &= ~(1 << TWIE);
 }

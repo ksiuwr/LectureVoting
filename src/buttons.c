@@ -17,13 +17,8 @@ uint8_t Pressed = 0;
 
 void btn_init()
 {
-    /*
-    set DDR on button pins to input
-    set PORT on buttons to pullup
-    */
-
-    BTN_DDR &= ~Mask;
-    BTN_PORT |= Mask;
+    BTN_DDR &= ~Mask;  // set DDR on button pins to input
+    BTN_PORT |= Mask;  // set PORT on buttons to pullup
 }
 
 void btn_click()
