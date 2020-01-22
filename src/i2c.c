@@ -2,6 +2,11 @@
 #include <util/delay.h>
 #include <util/twi.h>
 
+#define I2C_DDR DDRC
+#define I2C_PORT PORTC
+#define SDA_PIN PC4
+#define SCL_PIN PC5
+
 void i2c_wait()
 {
     while(~TWCR & (1 << TWINT))
@@ -12,6 +17,9 @@ void i2c_wait()
 
 void i2c_init(uint8_t twbr)
 {
+    I2C_DDR &= ~(1 << SDA_PIN) & ~(1 << SCL_PIN);  // set DDR on I2C pins to input
+    I2C_PORT |= (1 << SDA_PIN) | (1 << SCL_PIN);  // set PORT on I2C pins to pullup
+
     TWSR &= ~(1 << TWPS1) & ~(1 << TWPS0);  // Prescaler is set to 1 by default
     TWBR = twbr;  // SCL frequency = F_CPU / (16 + 2 * TWBR * Prescaler)
     TWCR |= (1 << TWEN);
