@@ -3,9 +3,16 @@
 
 #include <stdint.h>
 
+typedef enum
+{
+    I2C_read = 0;  // mode bit for reading
+    I2C_write = 1;  // mode bit for writing
+}
+i2c_mode;
+
 void i2c_init(uint8_t twbr);
-void i2c_start_write(uint8_t address);
+void i2c_start(uint8_t address, i2c_mode mode);
 void i2c_stop();
-void i2c_transmit(uint8_t value);
+void i2c_write(uint8_t value);
 
 #endif

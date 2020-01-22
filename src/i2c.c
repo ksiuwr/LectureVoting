@@ -18,12 +18,12 @@ void i2c_init(uint8_t twbr)
     TWCR &= ~(1 << TWIE);
 }
 
-void i2c_start_write(uint8_t address)
+void i2c_start(uint8_t address, i2c_mode mode)
 {
     TWCR = (1 << TWINT) | (1 << TWSTA) | (1 << TWEN);
     TWCR &= ~(1 << TWSTO);
     i2c_wait();
-    i2c_transmit((address << 1) & 0xf7);  // 7-bit address + write bit as 0
+    i2c_write((address << 1) | mode);  // 7-bit address + mode bit
 }
 
 void i2c_stop()
@@ -32,7 +32,7 @@ void i2c_stop()
     TWCR &= ~(1 << TWSTA);
 }
 
-void i2c_transmit(uint8_t value)
+void i2c_write(uint8_t value)
 {
     TWDR = value;
     TWCR |= (1 << TWINT) | (1 << TWEN);
