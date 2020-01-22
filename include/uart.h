@@ -6,5 +6,6 @@
 void uart_init();
 uint8_t uart_read();
 void uart_write(uint8_t data);
+void uart_write_dec(uint8_t number);
 
 #endif

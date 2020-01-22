@@ -6,7 +6,7 @@ void i2c_wait()
 {
     while(~TWCR & (1 << TWINT))
     {
-        _delay_us(100);
+        _delay_ms(100);
     }
 }
 

@@ -1,8 +1,6 @@
 #ifndef BUTTONS_H_
 #define BUTTONS_H_
 
-#include "memory.h"
-
 void btn_init();
 void btn_click();
 

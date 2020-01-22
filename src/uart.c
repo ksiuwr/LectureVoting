@@ -19,27 +19,38 @@ void uart_init()
     UCSR0C &= ~(1 << UMSEL01) & ~(1 << UMSEL00) & ~(1 << USBS0);  // asynchronous & 1 bit stop
 }
 
-uint8_t uart_read_8()
+uint8_t uart_read()
 {
-    while((UCSR0A & (1 << RXC0)) == 0)
+    while(~UCSR0A & (1 << RXC0))
     {
-        _delay_us(100);
+        _delay_ms(100);
     }
 
     return UDR0;
 }
 
-void uart_write_8(uint8_t data)
+void uart_write(uint8_t data)
 {
-    while((UCSR0A & (1 << UDRE0)) == 0)
+    while(~UCSR0A & (1 << UDRE0))
     {
-        _delay_us(100);
+        _delay_ms(100);
     }
 
     UDR0 = data;
 
-    while((UCSR0A & (1 << TXC0)) == 0)
+    while(~UCSR0A & (1 << TXC0))
     {
-        _delay_us(100);
+        _delay_ms(100);
     }
+}
+
+void uart_write_dec(uint8_t number)
+{
+    if(number >= 100)
+        uart_write(+'0' + (number % 1000) / 100);
+
+    if(number >= 10)
+        uart_write(+'0' + (number % 100) / 10);
+
+    uart_write(+'0' + number % 10);
 }

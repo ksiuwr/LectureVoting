@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <avr/io.h>
 #include <util/delay.h>
+#include "memory.h"
 
 #define BTN_DDR DDRB
 #define BTN_PORT PORTB
@@ -35,7 +36,7 @@ void btn_click()
             if(~Pressed & (1 << PLUS_PIN))
             {
                 Pressed = 1 << PLUS_PIN;
-                mem_inc_plus();
+                mem_increment(Plus);
             }
             break;
 
@@ -44,7 +45,7 @@ void btn_click()
             if(~Pressed & (1 << MINUS_PIN))
             {
                 Pressed = 1 << MINUS_PIN;
-                mem_inc_minus();
+                mem_increment(Minus);
             }
             break;
 
@@ -53,7 +54,7 @@ void btn_click()
             if(~Pressed & (1 << EGAL_PIN))
             {
                 Pressed = 1 << EGAL_PIN;
-                mem_inc_egal();
+                mem_increment(Egal);
             }
             break;
 

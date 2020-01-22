@@ -1,6 +1,11 @@
 #include "memory.h"
 
-memory counts = {0, 0, 0};
+static memory counts = {0, 0, 0};
+
+const memory * mem_get()
+{
+    return &counts;
+}
 
 void mem_init()
 {
@@ -8,18 +13,35 @@ void mem_init()
     counts.minus = 0;
     counts.egal = 0;
 }
-
-void mem_inc_plus()
+void mem_increment(vote v)
 {
-    ++counts.plus;
+    switch(v)
+    {
+        case Plus:
+            ++counts.plus;
+            break;
+
+        case Minus:
+            ++counts.minus;
+            break;
+
+        case Egal:
+            ++counts.egal;
+            break;
+    }
 }
 
-void mem_inc_minus()
+uint8_t mem_sign(vote v)
 {
-    ++counts.minus;
-}
+    switch(v)
+    {
+        case Plus:
+            return +'+';
 
-void mem_inc_egal()
-{
-    ++counts.egal;
+        case Minus:
+            return +'-';
+
+        case Egal:
+            return +'?';
+    }
 }
