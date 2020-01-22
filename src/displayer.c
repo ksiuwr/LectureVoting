@@ -12,7 +12,7 @@ void disp_send(const memory * m)
 {
     uint8_t total = m->plus + m->minus + m->egal;
 
-    i2c_start_write(ctrl_address);
+    i2c_start(ctrl_address, I2C_write);
     i2c_write(m->plus);
     i2c_write(m->minus);
     i2c_write(m->egal);
