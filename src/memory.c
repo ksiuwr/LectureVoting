@@ -1,6 +1,6 @@
 #include "memory.h"
 
-static memory counts = {0, 0, 0};
+memory counts = {0, 0, 0};
 
 const memory * mem_get()
 {

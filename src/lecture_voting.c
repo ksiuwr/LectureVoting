@@ -11,7 +11,22 @@ int main()
 
     while(1)
     {
-        /* TODO: code */
+        while(btn_pressed())
+        {
+            btn_click();
+            _delay_ms(200);
+        }
+
+        uart_write('+');
+        uart_write_dec(mem_get()->plus);
+        uart_write(' ');
+        uart_write('-');
+        uart_write_dec(mem_get()->minus);
+        uart_write(' ');
+        uart_write('?');
+        uart_write_dec(mem_get()->egal);
+        uart_write('\r');
+        _delay_ms(100);
     }
 
     return 0;
