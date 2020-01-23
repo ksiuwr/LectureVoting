@@ -22,9 +22,9 @@ void btn_init()
     BTN_PORT |= Mask;  // set PORT on buttons pins to pullup
 }
 
-uint8_t btn_pressed()
+uint8_t btn_released()
 {
-    return Pressed > 0 ? 1 : 0;
+    return Pressed == 0 ? 1 : 0;
 }
 
 void btn_click()

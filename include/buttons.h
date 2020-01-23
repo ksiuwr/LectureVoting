@@ -2,7 +2,7 @@
 #define BUTTONS_H_
 
 void btn_init();
-uint8_t btn_pressed();
+uint8_t btn_released();
 void btn_click();
 
 #endif
