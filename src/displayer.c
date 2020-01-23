@@ -1,6 +1,7 @@
 #include "displayer.h"
+#include "utils.h"
 
-const uint8_t ctrl_address = 0x38;
+const uint8_t ctrl_address = 0x3f;
 
 void disp_init()
 {
@@ -8,14 +9,13 @@ void disp_init()
     i2c_init(152U);
 }
 
-void disp_send(const memory * m)
+void disp_send()
 {
-    uint8_t total = m->plus + m->minus + m->egal;
+    bcd dg = code_dec(134U);
 
-    i2c_start(ctrl_address, I2C_write);
-    i2c_write(m->plus);
-    i2c_write(m->minus);
-    i2c_write(m->egal);
-    i2c_write(total);
+    i2c_start(ctrl_address, I2C_Write);
+    i2c_write(dg.hundreds);
+    i2c_write(dg.tens);
+    i2c_write(dg.ones);
     i2c_stop();
 }

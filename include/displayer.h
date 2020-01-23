@@ -5,6 +5,6 @@
 #include "memory.h"
 
 void disp_init();
-void disp_send(const memory * m);
+void disp_send();
 
 #endif

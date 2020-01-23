@@ -1,5 +1,6 @@
 #include <util/delay.h>
 #include "buttons.h"
+#include "displayer.h"
 #include "memory.h"
 #include "uart.h"
 
@@ -21,7 +22,8 @@ int main()
     mem_init();
     uart_init();
     btn_init();
-
+    disp_init();
+    /*
     _delay_ms(500);
     show_status_uart();
 
@@ -39,6 +41,9 @@ int main()
         show_status_uart();
         _delay_ms(100);
     }
+    */
+
+    disp_send();
 
     return 0;
 }

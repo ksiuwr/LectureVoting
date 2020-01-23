@@ -2,6 +2,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <util/setbaud.h>
+#include "utils.h"
 
 void uart_init()
 {
@@ -46,11 +47,13 @@ void uart_write(uint8_t data)
 
 void uart_write_dec(uint8_t number)
 {
-    if(number >= 100)
-        uart_write(+'0' + (number % 1000) / 100);
+    bcd dg = code_dec(number);
 
-    if(number >= 10)
-        uart_write(+'0' + (number % 100) / 10);
+    if(dg.hundreds > 0)
+        uart_write(dg.hundreds);
 
-    uart_write(+'0' + number % 10);
+    if(dg.tens)
+        uart_write(dg.tens);
+
+    uart_write(dg.ones);
 }
