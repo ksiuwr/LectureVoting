@@ -23,6 +23,7 @@ int main()
     uart_init();
     btn_init();
     disp_init();
+
     /*
     _delay_ms(500);
     show_status_uart();
@@ -42,8 +43,6 @@ int main()
         _delay_ms(100);
     }
     */
-
-    disp_send();
 
     return 0;
 }

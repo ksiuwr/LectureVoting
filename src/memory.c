@@ -13,6 +13,7 @@ void mem_init()
     counts.minus = 0;
     counts.egal = 0;
 }
+
 void mem_increment(vote v)
 {
     switch(v)
