@@ -14,9 +14,9 @@ inline bcd code_dec(uint8_t number)
 {
     bcd d;
 
-    d.hundreds = uart_write(+'0' + (number % 1000) / 100);
-    d.tens = uart_write(+'0' + (number % 100) / 10);
-    d.ones = uart_write(+'0' + number % 10);
+    d.hundreds = +'0' + (number % 1000) / 100;
+    d.tens = +'0' + (number % 100) / 10;
+    d.ones = +'0' + number % 10;
 
     return d;
 }
