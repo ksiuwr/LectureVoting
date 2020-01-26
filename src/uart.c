@@ -47,13 +47,31 @@ void uart_write(uint8_t data)
 
 void uart_write_dec(uint8_t number)
 {
-    bcd dg = code_dec(number);
+    digits dg = code_dec(number);
 
-    if(dg.hundreds > 0)
+    if(dg.hundreds != '0')
         uart_write(dg.hundreds);
 
-    if(dg.tens)
+    if(dg.tens != '0')
         uart_write(dg.tens);
 
     uart_write(dg.ones);
+}
+
+void uart_write_hex(uint8_t number)
+{
+    digits dg = code_hex(number);
+
+    uart_write(dg.hundreds);
+
+    if(dg.tens != '0')
+        uart_write(dg.tens);
+
+    uart_write(dg.ones);
+}
+
+void uart_write_endl()
+{
+    uart_write('\r');
+    uart_write('\n');
 }

@@ -5,8 +5,8 @@
 
 typedef enum
 {
-    I2C_Read = 0,  // mode bit for reading
-    I2C_Write = 1  // mode bit for writing
+    I2C_Write = 0,  // mode bit for writing
+    I2C_Read = 1  // mode bit for reading
 } i2c_mode;
 
 void i2c_init(uint8_t twbr);

@@ -42,14 +42,15 @@ void disp_send_4_(uint8_t half_bit, reg_select rs)
 
 void disp_send_8_(uint8_t cmd, reg_select rs)
 {
-    disp_send_4_((cmd & 0xF0) >> 4, rs);
+    disp_send_4_(cmd >> 4, rs);
     disp_send_4_(cmd & 0x0F, rs);
 }
 
 void disp_init()
 {
-    // Prescaler == 1 (by default) ; When TWBR == 152, then SCL frequency == 25 kHz
-    i2c_init(152U);
+    // Prescaler == 1 (by default) ; When TWBR == 72, then SCL frequency == 100 kHz
+    i2c_init(72U);
+    disp_send_4_(0x00, Command);
     _delay_ms(50);
     disp_send_4_(0x03, Command);
     _delay_ms(5);
@@ -62,7 +63,7 @@ void disp_init()
     disp_send_8_(0x08, Command);  // display off, cursor off, blinking off
     disp_clear();
     disp_send_8_(0x06, Command);  // moving cursor right
-    disp_send_8_(0x0C, Command);  // display on, cursor off, blinking off
+    disp_send_8_(0x0E, Command);  // display on, cursor on, blinking off
 }
 
 void disp_clear()
@@ -71,10 +72,11 @@ void disp_clear()
     _delay_ms(2);
 }
 
-void disp_home()
+void disp_move(uint8_t row, uint8_t col)
 {
-    disp_send_8_(0x02, Command);
-    _delay_ms(2);
+    uint8_t lines[2] = {0x00, 0x40};
+
+    disp_send_8_((0x80 | lines[row]) + col, Command);
 }
 
 void disp_write_char(uint8_t character)
@@ -84,12 +86,12 @@ void disp_write_char(uint8_t character)
 
 void disp_write_dec(uint8_t number)
 {
-    bcd dg = code_dec(number);
+    digits dg = code_dec(number);
 
-    if(dg.hundreds > 0)
+    if(dg.hundreds != '0')
         disp_send_8_(dg.hundreds, Data);
 
-    if(dg.tens)
+    if(dg.tens != '0')
         disp_send_8_(dg.tens, Data);
 
     disp_send_8_(dg.ones, Data);

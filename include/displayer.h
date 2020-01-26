@@ -7,7 +7,7 @@
 
 void disp_init();
 void disp_clear();
-void disp_home();
+void disp_move(uint8_t row, uint8_t col);
 void disp_write_char(uint8_t character);
 void disp_write_dec(uint8_t number);
 
