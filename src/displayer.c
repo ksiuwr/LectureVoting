@@ -21,8 +21,17 @@
 #define E_FLAG 0x04
 #define BT_FLAG 0x08
 
-void disp_send_i2c_(uint8_t data)
+typedef enum
 {
+    Command = 0,
+    Data = 1
+} reg_select;
+
+void disp_send_4_(uint8_t half_bit, reg_select rs)
+{
+    uint8_t data = ((half_bit << 4) | BT_FLAG) & ~RW_FLAG;
+
+    data = rs ? (data | RS_FLAG) : (data & ~RS_FLAG);
     i2c_start(CTRL_ADDRESS, I2C_Write);
     i2c_write(data | E_FLAG);
     _delay_us(5);
@@ -31,26 +40,57 @@ void disp_send_i2c_(uint8_t data)
     i2c_stop();
 }
 
+void disp_send_8_(uint8_t cmd, reg_select rs)
+{
+    disp_send_4_((cmd & 0xF0) >> 4, rs);
+    disp_send_4_(cmd & 0x0F, rs);
+}
+
 void disp_init()
 {
     // Prescaler == 1 (by default) ; When TWBR == 152, then SCL frequency == 25 kHz
     i2c_init(152U);
+    _delay_ms(50);
+    disp_send_4_(0x03, Command);
+    _delay_ms(5);
+    disp_send_4_(0x03, Command);
+    _delay_us(200);
+    disp_send_4_(0x03, Command);
+    _delay_us(200);
+    disp_send_4_(0x02, Command);  // 4 bit sending
+    disp_send_8_(0x28, Command);  // 4 bit sending, 2 display lines, 5x8 dots
+    disp_send_8_(0x08, Command);  // display off, cursor off, blinking off
+    disp_clear();
+    disp_send_8_(0x06, Command);  // moving cursor right
+    disp_send_8_(0x0C, Command);  // display on, cursor off, blinking off
 }
 
-void disp_send_command(uint8_t cmd)
+void disp_clear()
 {
-    uint8_t upper_data = ((cmd & 0xF0) | BT_FLAG) & ~(RW_FLAG | RS_FLAG);
-    uint8_t lower_data = (((cmd & 0x0F) << 4) | BT_FLAG) & ~(RW_FLAG | RS_FLAG);
-
-    disp_send_i2c_(upper_data);
-    disp_send_i2c_(lower_data);
+    disp_send_8_(0x01, Command);
+    _delay_ms(2);
 }
 
-void disp_send_data(uint8_t data)
+void disp_home()
 {
-    uint8_t upper_data = ((data & 0xF0) | BT_FLAG | RS_FLAG) & ~RW_FLAG;
-    uint8_t lower_data = (((data & 0x0F) << 4) | BT_FLAG | RS_FLAG) & ~RW_FLAG;
+    disp_send_8_(0x02, Command);
+    _delay_ms(2);
+}
 
-    disp_send_i2c_(upper_data);
-    disp_send_i2c_(lower_data);
+void disp_write_char(uint8_t character)
+{
+    disp_send_8_(character, Data);
+}
+
+void disp_write_dec(uint8_t number)
+{
+    bcd dg = code_dec(number);
+
+    if(dg.hundreds > 0)
+        disp_send_8_(dg.hundreds, Data);
+
+    if(dg.tens)
+        disp_send_8_(dg.tens, Data);
+
+    disp_send_8_(dg.ones, Data);
 }

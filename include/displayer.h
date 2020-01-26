@@ -6,7 +6,9 @@
 #include "memory.h"
 
 void disp_init();
-void disp_send_command(uint8_t cmd);
-void disp_send_data(uint8_t data);
+void disp_clear();
+void disp_home();
+void disp_write_char(uint8_t character);
+void disp_write_dec(uint8_t number);
 
 #endif

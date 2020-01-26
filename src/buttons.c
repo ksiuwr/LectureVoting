@@ -13,7 +13,6 @@
 #define EGAL_PIN PB3
 
 const uint8_t Mask = (1 << PLUS_PIN) | (1 << MINUS_PIN) | (1 << EGAL_PIN) | (1 << RESET_PIN);
-uint8_t Pressed = 0;
 
 void btn_init()
 {
@@ -21,59 +20,7 @@ void btn_init()
     BTN_PORT |= Mask;  // set PORT on buttons pins to pullup
 }
 
-uint8_t btn_released()
+void btn_pressed()
 {
-    return Pressed == 0 ? 1 : 0;
-}
-
-void btn_click()
-{
-    switch(~BTN_PIN & Mask)
-    {
-        // nothing clicked
-        case 0:
-            Pressed = 0;
-            break;
-
-        // only PLUS clicked
-        case 1 << PLUS_PIN:
-            if(~Pressed & (1 << PLUS_PIN))
-            {
-                Pressed = 1 << PLUS_PIN;
-                mem_increment(Plus);
-            }
-            break;
-
-        // only MINUS clicked
-        case 1 << MINUS_PIN:
-            if(~Pressed & (1 << MINUS_PIN))
-            {
-                Pressed = 1 << MINUS_PIN;
-                mem_increment(Minus);
-            }
-            break;
-
-        // only EGAL clicked
-        case 1 << EGAL_PIN:
-            if(~Pressed & (1 << EGAL_PIN))
-            {
-                Pressed = 1 << EGAL_PIN;
-                mem_increment(Egal);
-            }
-            break;
-
-        // only RESET clicked
-        case 1 << RESET_PIN:
-            if(~Pressed & (1 << RESET_PIN))
-            {
-                Pressed = 1 << RESET_PIN;
-                mem_init();
-            }
-            break;
-
-        // multiple buttons clicked
-        default:
-            Pressed = Mask;
-            break;
-    }
+    uint8_t pressed_mask = ~BTN_PIN & Mask;
 }

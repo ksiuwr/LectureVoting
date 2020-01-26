@@ -24,25 +24,5 @@ int main()
     btn_init();
     disp_init();
 
-    /*
-    _delay_ms(500);
-    show_status_uart();
-
-    while(1)
-    {
-        while(btn_released())
-            _delay_ms(50);
-
-        while(!btn_released())
-        {
-            btn_click();
-            _delay_ms(200);
-        }
-
-        show_status_uart();
-        _delay_ms(100);
-    }
-    */
-
     return 0;
 }
