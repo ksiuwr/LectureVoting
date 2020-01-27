@@ -61,12 +61,12 @@ void disp_init()
     disp_send_4_(0x02, Command);  // 4 bit sending
     disp_send_8_(0x28, Command);  // 4 bit sending, 2 display lines, 5x8 dots
     disp_send_8_(0x08, Command);  // display off, cursor off, blinking off
-    disp_clear();
+    disp_clear_all();
     disp_send_8_(0x06, Command);  // moving cursor right
-    disp_send_8_(0x0E, Command);  // display on, cursor on, blinking off
+    disp_send_8_(0x0C, Command);  // display on, cursor off, blinking off
 }
 
-void disp_clear()
+void disp_clear_all()
 {
     disp_send_8_(0x01, Command);
     _delay_ms(2);
@@ -77,6 +77,15 @@ void disp_move(uint8_t row, uint8_t col)
     uint8_t lines[2] = {0x00, 0x40};
 
     disp_send_8_((0x80 | lines[row]) + col, Command);
+}
+
+void disp_clear_line(uint8_t line, uint8_t max_cols)
+{
+    disp_move(line, 0);
+    max_cols = max_cols >= 16 ? 16 : max_cols;
+
+    for(uint8_t i = 0; i < max_cols; ++i)
+        disp_write_char(' ');
 }
 
 void disp_write_char(uint8_t character)
