@@ -53,4 +53,4 @@ Possible Make targets are:
 + `make refresh` - remove additional build files & compile source files
 
 ## How to deploy?
-First check if Arduino is connected via USB and `/dev/ttyACM0` is open. Then simply `make install` command can be run if the sources have already been compiled . But if one wants the sources to be compiled before, then they have to run `make reinstall` command.
+First check if Arduino is connected via USB and `/dev/ttyACM0` is open. Then simply run `make install` command if sources have already been compiled. But if sources should be compiled before, then run `make reinstall` command.
