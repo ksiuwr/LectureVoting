@@ -69,9 +69,3 @@ void uart_write_hex(uint8_t number)
 
     uart_write(dg.ones);
 }
-
-void uart_write_endl()
-{
-    uart_write('\r');
-    uart_write('\n');
-}

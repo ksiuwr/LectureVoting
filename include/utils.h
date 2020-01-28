@@ -10,7 +10,7 @@ typedef struct
     uint8_t ones;
 } digits;
 
-inline digits code_dec(uint8_t number)
+static inline digits code_dec(uint8_t number)
 {
     digits d;
 
@@ -21,7 +21,7 @@ inline digits code_dec(uint8_t number)
     return d;
 }
 
-inline digits code_hex(uint8_t number)
+static inline digits code_hex(uint8_t number)
 {
     digits d;
     uint8_t tens_rem = (number % 256) / 16;

@@ -38,7 +38,7 @@ void disp_send_4_(uint8_t half_bit, reg_select rs)
     _delay_us(50);
 }
 
-void disp_send_8_(uint8_t cmd, reg_select rs)
+inline void disp_send_8_(uint8_t cmd, reg_select rs)
 {
     disp_send_4_(cmd >> 4, rs);
     disp_send_4_(cmd & 0x0F, rs);
@@ -105,6 +105,18 @@ void disp_write_dec(uint8_t number)
 
     if(dg.hundreds != '0')
         disp_send_8_(dg.hundreds, Data);
+
+    if(dg.tens != '0')
+        disp_send_8_(dg.tens, Data);
+
+    disp_send_8_(dg.ones, Data);
+}
+
+void disp_write_hex(uint8_t number)
+{
+    digits dg = code_hex(number);
+
+    disp_send_8_(dg.hundreds, Data);
 
     if(dg.tens != '0')
         disp_send_8_(dg.tens, Data);
