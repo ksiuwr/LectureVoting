@@ -10,16 +10,10 @@ typedef struct
     uint8_t egal;
 } memory;
 
-typedef enum
-{
-    Plus,
-    Minus,
-    Egal
-} vote;
-
 const memory * mem_get();
 void mem_init();
-void mem_increment(vote v);
-uint8_t mem_sign(vote v);
+void mem_inc_plus();
+void mem_inc_minus();
+void mem_inc_egal();
 
 #endif

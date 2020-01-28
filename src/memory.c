@@ -14,35 +14,17 @@ void mem_init()
     counts.egal = 0;
 }
 
-void mem_increment(vote v)
+void mem_inc_plus()
 {
-    switch(v)
-    {
-        case Plus:
-            ++counts.plus;
-            break;
-
-        case Minus:
-            ++counts.minus;
-            break;
-
-        case Egal:
-            ++counts.egal;
-            break;
-    }
+    ++counts.plus;
 }
 
-uint8_t mem_sign(vote v)
+void mem_inc_minus()
 {
-    switch(v)
-    {
-        case Plus:
-            return +'+';
+    ++counts.minus;
+}
 
-        case Minus:
-            return +'-';
-
-        case Egal:
-            return +'?';
-    }
+void mem_inc_egal()
+{
+    ++counts.egal;
 }

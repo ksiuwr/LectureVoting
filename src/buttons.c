@@ -1,7 +1,6 @@
 #include "buttons.h"
 #include <avr/io.h>
 #include <util/delay.h>
-#include "memory.h"
 
 #define BTN_DDR DDRB
 #define BTN_PORT PORTB
@@ -19,16 +18,16 @@ pressed btn_release_(uint8_t button_pin)
     switch(button_pin)
     {
         case PLUS_PIN:
-            mem_increment(Plus);
-            return Voted;
+            mem_inc_plus();
+            return VotedPlus;
 
         case MINUS_PIN:
-            mem_increment(Minus);
-            return Voted;
+            mem_inc_minus();
+            return VotedMinus;
 
         case EGAL_PIN:
-            mem_increment(Egal);
-            return Voted;
+            mem_inc_egal();
+            return VotedEgal;
 
         case RESET_PIN:
             mem_init();

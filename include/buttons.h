@@ -2,13 +2,16 @@
 #define BUTTONS_H_
 
 #include <stdint.h>
+#include "memory.h"
 
 typedef enum
 {
-    No = 0,
-    Voted = 1,
-    Resetting = 2,
-    Multiple = 3
+    VotedPlus = 0,
+    VotedMinus = 1,
+    VotedEgal = 2,
+    No = 5,
+    Resetting = 6,
+    Multiple = 7
 } pressed;
 
 void btn_init();
