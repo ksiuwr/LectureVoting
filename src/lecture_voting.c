@@ -95,5 +95,7 @@ int main()
         _delay_us(500);
     }
 
+    disp_end();
+
     return 0;
 }

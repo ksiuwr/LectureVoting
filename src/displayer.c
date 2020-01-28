@@ -32,12 +32,10 @@ void disp_send_4_(uint8_t half_bit, reg_select rs)
     uint8_t data = ((half_bit << 4) | BT_FLAG) & ~RW_FLAG;
 
     data = rs ? (data | RS_FLAG) : (data & ~RS_FLAG);
-    i2c_start(CTRL_ADDRESS, I2C_Write);
     i2c_write(data | E_FLAG);
     _delay_us(5);
     i2c_write(data & ~E_FLAG);
     _delay_us(50);
-    i2c_stop();
 }
 
 void disp_send_8_(uint8_t cmd, reg_select rs)
@@ -50,6 +48,7 @@ void disp_init()
 {
     // Prescaler == 1 (by default) ; When TWBR == 72, then SCL frequency == 100 kHz
     i2c_init(72U);
+    i2c_start(CTRL_ADDRESS, I2C_Write);
     disp_send_4_(0x00, Command);
     _delay_ms(50);
     disp_send_4_(0x03, Command);
@@ -64,6 +63,13 @@ void disp_init()
     disp_clear_all();
     disp_send_8_(0x06, Command);  // moving cursor right
     disp_send_8_(0x0C, Command);  // display on, cursor off, blinking off
+}
+
+void disp_end()
+{
+    disp_clear_all();
+    disp_send_8_(0x08, Command);  // display off, cursor off, blinking off
+    i2c_stop();
 }
 
 void disp_clear_all()
