@@ -20,14 +20,16 @@ void show_vote_disp(uint8_t col, uint8_t sign, uint8_t value)
 
 void show_votes_uart()
 {
+    const memory * m = mem_get();
+
     uart_write('+');
-    uart_write_dec(mem_get()->plus);
+    uart_write_dec(m->plus);
     uart_write(' ');
     uart_write('-');
-    uart_write_dec(mem_get()->minus);
+    uart_write_dec(m->minus);
     uart_write(' ');
     uart_write('?');
-    uart_write_dec(mem_get()->egal);
+    uart_write_dec(m->egal);
     uart_write('\r');
 }
 
@@ -102,6 +104,7 @@ int main()
                 break;
 
             case Resetting:
+                disp_clear_all();
                 show_all();
                 break;
 
