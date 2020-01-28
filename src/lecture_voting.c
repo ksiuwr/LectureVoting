@@ -4,12 +4,12 @@
 #include "memory.h"
 #include "uart.h"
 
-const uint8_t COL_PLUS = 0;
-const uint8_t COL_MINUS = 5;
-const uint8_t COL_EGAL = 10;
-const uint8_t SIGN_PLUS = '+';
-const uint8_t SIGN_MINUS = '-';
-const uint8_t SIGN_EGAL = '?';
+const uint8_t ColPlus = 0;
+const uint8_t ColMinus = 5;
+const uint8_t ColEgal = 10;
+const uint8_t SignPlus = '+';
+const uint8_t SignMinus = '-';
+const uint8_t SignEgal = '?';
 
 void show_vote_disp(uint8_t col, uint8_t sign, uint8_t value)
 {
@@ -22,13 +22,13 @@ void show_votes_uart()
 {
     const memory * m = mem_get();
 
-    uart_write('+');
+    uart_write(SignPlus);
     uart_write_dec(m->plus);
     uart_write(' ');
-    uart_write('-');
+    uart_write(SignMinus);
     uart_write_dec(m->minus);
     uart_write(' ');
-    uart_write('?');
+    uart_write(SignEgal);
     uart_write_dec(m->egal);
     uart_write('\r');
 }
@@ -54,9 +54,9 @@ void show_all()
 
     disp_move(1, 0);
     disp_write_char(0xF3);
-    show_vote_disp(COL_PLUS, SIGN_PLUS, m->plus);
-    show_vote_disp(COL_MINUS, SIGN_MINUS, m->minus);
-    show_vote_disp(COL_EGAL, SIGN_EGAL, m->egal);
+    show_vote_disp(ColPlus, SignPlus, m->plus);
+    show_vote_disp(ColMinus, SignMinus, m->minus);
+    show_vote_disp(ColEgal, SignEgal, m->egal);
     show_votes_uart();
     disp_clear_line(1, 1);
 }
@@ -85,15 +85,15 @@ int main()
         switch(btn_click())
         {
             case VotedPlus:
-                add_vote(COL_PLUS, SIGN_PLUS, mem_get()->plus);
+                add_vote(ColPlus, SignPlus, mem_get()->plus);
                 break;
 
             case VotedMinus:
-                add_vote(COL_MINUS, SIGN_MINUS, mem_get()->minus);
+                add_vote(ColMinus, SignMinus, mem_get()->minus);
                 break;
 
             case VotedEgal:
-                add_vote(COL_EGAL, SIGN_EGAL, mem_get()->egal);
+                add_vote(ColEgal, SignEgal, mem_get()->egal);
                 break;
 
             case No:
