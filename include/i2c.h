@@ -24,7 +24,7 @@ static inline void i2c_write(uint8_t value)
 
     while(~TWCR & (1 << TWINT))
     {
-        _delay_ms(100);
+        _delay_us(50);
     }
 }
 
@@ -44,7 +44,7 @@ static inline void i2c_start(uint8_t address, i2c_mode mode)
 
     while(~TWCR & (1 << TWINT))
     {
-        _delay_ms(100);
+        _delay_us(50);
     }
 
     i2c_write((address << 1) | mode);  // 7-bit address + mode bit
