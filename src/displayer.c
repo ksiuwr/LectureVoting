@@ -2,7 +2,8 @@
 #include <util/delay.h>
 #include "utils.h"
 
-#define CTRL_ADDRESS 0x3F
+#define ADDRESS_PCF8574 0x27
+#define ADDRESS_PCF8574A 0x3f
 
 /* DATA FORMAT REFERENCE:
  *  P7 | P6 | P5 | P4 | P3 | P2 | P1 | P0
@@ -48,7 +49,7 @@ void disp_init()
 {
     // Prescaler == 1 (by default) ; When TWBR == 72, then SCL frequency == 100 kHz
     i2c_init(72U);
-    i2c_start(CTRL_ADDRESS, I2C_Write);
+    i2c_start(ADDRESS_PCF8574A, I2C_Write);
     disp_send_4_(0x00, Command);
     _delay_ms(50);
     disp_send_4_(0x03, Command);
