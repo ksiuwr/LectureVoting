@@ -7,6 +7,7 @@
 
 #define PCF8574 0x27
 #define PCF8574A 0x3f
+#define DEVICE PCF8574A
 
 void disp_init();
 void disp_end();

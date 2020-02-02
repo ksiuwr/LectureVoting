@@ -46,7 +46,7 @@ void disp_init()
 {
     // Prescaler == 1 (by default) ; When TWBR == 72, then SCL frequency == 100 kHz
     i2c_init(72U);
-    i2c_start(PCF8574A, I2C_Write);
+    i2c_start(DEVICE, I2C_Write);
     disp_send_4_(0x00, Command);
     _delay_ms(50);
     disp_send_4_(0x03, Command);
