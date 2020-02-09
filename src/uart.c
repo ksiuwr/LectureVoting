@@ -52,7 +52,7 @@ void uart_write_dec(uint8_t number)
     if(dg.hundreds != '0')
         uart_write(dg.hundreds);
 
-    if(dg.tens != '0')
+    if(dg.hundreds != '0' || dg.tens != '0')
         uart_write(dg.tens);
 
     uart_write(dg.ones);

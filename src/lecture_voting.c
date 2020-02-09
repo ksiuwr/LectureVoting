@@ -16,9 +16,27 @@ void show_vote_disp(uint8_t col, uint8_t sign, uint8_t value)
     disp_move(0, col);
     disp_write_char(sign);
     disp_write_dec(value);
+
+    if(value == 0)
+    {
+        disp_write_char(' ');
+        disp_write_char(' ');
+    }
 }
 
-void show_votes_uart()
+void show_vote_uart(uint8_t sign, uint8_t value)
+{
+    uart_write(sign);
+    uart_write_dec(value);
+
+    if(value < 100)
+        uart_write(' ');
+
+    if(value < 10)
+        uart_write(' ');
+}
+
+void show_all_votes_uart()
 {
     const memory * m = mem_get();
 
@@ -57,7 +75,7 @@ void show_all()
     show_vote_disp(ColPlus, SignPlus, m->plus);
     show_vote_disp(ColMinus, SignMinus, m->minus);
     show_vote_disp(ColEgal, SignEgal, m->egal);
-    show_votes_uart();
+    show_all_votes_uart();
     disp_clear_line(1, 1);
 }
 
@@ -66,7 +84,7 @@ void add_vote(uint8_t col, uint8_t sign, uint8_t value)
     disp_move(1, 0);
     disp_write_char(0xF3);
     show_vote_disp(col, sign, value);
-    show_votes_uart();
+    show_all_votes_uart();
     disp_clear_line(1, 1);
 }
 
@@ -82,7 +100,14 @@ int main()
 
     while(1)
     {
-        switch(btn_click())
+        pressed p = btn_click();
+
+        if(was_error)
+            disp_clear_line(1, 3);
+
+        was_error = 0;
+
+        switch(p)
         {
             case VotedPlus:
                 add_vote(ColPlus, SignPlus, mem_get()->plus);
@@ -97,10 +122,6 @@ int main()
                 break;
 
             case No:
-                if(was_error)
-                    disp_clear_line(1, 3);
-
-                was_error = 0;
                 break;
 
             case Resetting:

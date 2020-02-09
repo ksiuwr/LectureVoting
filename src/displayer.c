@@ -105,7 +105,7 @@ void disp_write_dec(uint8_t number)
     if(dg.hundreds != '0')
         disp_send_8_(dg.hundreds, Data);
 
-    if(dg.tens != '0')
+    if(dg.hundreds != '0' || dg.tens != '0')
         disp_send_8_(dg.tens, Data);
 
     disp_send_8_(dg.ones, Data);
@@ -115,7 +115,7 @@ void disp_write_hex(uint8_t number)
 {
     digits dg = code_hex(number);
 
-    disp_send_8_(dg.hundreds, Data);
+    disp_send_8_(dg.hundreds, Data);  // always 'x'
 
     if(dg.tens != '0')
         disp_send_8_(dg.tens, Data);
