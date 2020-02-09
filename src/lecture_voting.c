@@ -40,14 +40,11 @@ void show_all_votes_uart()
 {
     const memory * m = mem_get();
 
-    uart_write(SignPlus);
-    uart_write_dec(m->plus);
+    show_vote_uart(SignPlus, m->plus);
     uart_write(' ');
-    uart_write(SignMinus);
-    uart_write_dec(m->minus);
+    show_vote_uart(SignMinus, m->minus);
     uart_write(' ');
-    uart_write(SignEgal);
-    uart_write_dec(m->egal);
+    show_vote_uart(SignEgal, m->egal);
     uart_write('\r');
 }
 
