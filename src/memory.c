@@ -16,15 +16,15 @@ void mem_init()
 
 void mem_inc_plus()
 {
-    ++counts.plus;
+    counts.plus = (counts.plus + 1) % 1000;
 }
 
 void mem_inc_minus()
 {
-    ++counts.minus;
+    counts.minus = (counts.minus + 1) % 1000;
 }
 
 void mem_inc_egal()
 {
-    ++counts.egal;
+    counts.egal = (counts.egal + 1) % 1000;
 }
