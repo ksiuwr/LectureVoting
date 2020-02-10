@@ -1,13 +1,13 @@
 #ifndef MEMORY_H_
 #define MEMORY_H_
 
-#include <stdint.h>
+#include "types.h"
 
 typedef struct
 {
-    uint8_t plus;
-    uint8_t minus;
-    uint8_t egal;
+    number_t plus;
+    number_t minus;
+    number_t egal;
 } memory;
 
 const memory * mem_get();

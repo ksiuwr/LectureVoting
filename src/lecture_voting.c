@@ -2,16 +2,17 @@
 #include "buttons.h"
 #include "displayer.h"
 #include "memory.h"
+#include "types.h"
 #include "uart.h"
 
-const uint8_t ColPlus = 0;
-const uint8_t ColMinus = 5;
-const uint8_t ColEgal = 10;
-const uint8_t SignPlus = '+';
-const uint8_t SignMinus = '-';
-const uint8_t SignEgal = '?';
+const character_t ColPlus = 0;
+const character_t ColMinus = 5;
+const character_t ColEgal = 10;
+const character_t SignPlus = '+';
+const character_t SignMinus = '-';
+const character_t SignEgal = '?';
 
-void show_vote_disp(uint8_t col, uint8_t sign, uint8_t value)
+void show_vote_disp(uint8_t col, character_t sign, number_t value)
 {
     disp_move(0, col);
     disp_write_char(sign);
@@ -24,7 +25,7 @@ void show_vote_disp(uint8_t col, uint8_t sign, uint8_t value)
     }
 }
 
-void show_vote_uart(uint8_t sign, uint8_t value)
+void show_vote_uart(character_t sign, number_t value)
 {
     uart_write(sign);
     uart_write_dec(value);
@@ -76,7 +77,7 @@ void show_all()
     disp_clear_line(1, 1);
 }
 
-void add_vote(uint8_t col, uint8_t sign, uint8_t value)
+void add_vote(uint8_t col, character_t sign, number_t value)
 {
     disp_move(1, 0);
     disp_write_char(0xF3);

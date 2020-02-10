@@ -1,7 +1,7 @@
 #include "displayer.h"
 #include <util/delay.h>
 #include "converter.h"
-#include "utils.h"
+#include "numbers.h"
 
 /* DATA FORMAT REFERENCE:
  *  P7 | P6 | P5 | P4 | P3 | P2 | P1 | P0
@@ -26,9 +26,9 @@ typedef enum
     Data = 1
 } reg_select;
 
-void disp_send_4_(uint8_t half_bit, reg_select rs)
+void disp_send_4_(character_t half_bit, reg_select rs)
 {
-    uint8_t data = ((half_bit << 4) | BT_FLAG) & ~RW_FLAG;
+    character_t data = ((half_bit << 4) | BT_FLAG) & ~RW_FLAG;
 
     data = rs ? (data | RS_FLAG) : (data & ~RS_FLAG);
     i2c_write(data | E_FLAG);
@@ -37,7 +37,7 @@ void disp_send_4_(uint8_t half_bit, reg_select rs)
     _delay_us(50);
 }
 
-inline void disp_send_8_(uint8_t cmd, reg_select rs)
+inline void disp_send_8_(character_t cmd, reg_select rs)
 {
     disp_send_4_(cmd >> 4, rs);
     disp_send_4_(cmd & 0x0F, rs);
@@ -93,12 +93,12 @@ void disp_clear_line(uint8_t line, uint8_t max_cols)
         disp_write_char(' ');
 }
 
-void disp_write_char(uint8_t character)
+void disp_write_char(character_t character)
 {
     disp_send_8_(character, Data);
 }
 
-void disp_write_dec(uint8_t number)
+void disp_write_dec(number_t number)
 {
     digits dg = code_dec(number);
 
@@ -111,13 +111,16 @@ void disp_write_dec(uint8_t number)
     disp_send_8_(dg.ones, Data);
 }
 
-void disp_write_hex(uint8_t number)
+void disp_write_hex(number_t number)
 {
     digits dg = code_hex(number);
 
-    disp_send_8_(dg.hundreds, Data);  // always 'x'
+    disp_send_8_('x', Data);
 
-    if(dg.tens != '0')
+    if(dg.hundreds != '0')
+        disp_send_8_(dg.hundreds, Data);
+
+    if(dg.hundreds != '0' || dg.tens != '0')
         disp_send_8_(dg.tens, Data);
 
     disp_send_8_(dg.ones, Data);

@@ -2,7 +2,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <util/setbaud.h>
-#include "utils.h"
+#include "numbers.h"
 
 void uart_init()
 {
@@ -20,7 +20,7 @@ void uart_init()
     UCSR0C &= ~(1 << UMSEL01) & ~(1 << UMSEL00) & ~(1 << USBS0);  // asynchronous & 1 bit stop
 }
 
-uint8_t uart_read()
+character_t uart_read()
 {
     while(~UCSR0A & (1 << RXC0))
     {
@@ -30,7 +30,7 @@ uint8_t uart_read()
     return UDR0;
 }
 
-void uart_write(uint8_t data)
+void uart_write(character_t data)
 {
     while(~UCSR0A & (1 << UDRE0))
     {
@@ -45,7 +45,7 @@ void uart_write(uint8_t data)
     }
 }
 
-void uart_write_dec(uint8_t number)
+void uart_write_dec(number_t number)
 {
     digits dg = code_dec(number);
 
@@ -58,13 +58,16 @@ void uart_write_dec(uint8_t number)
     uart_write(dg.ones);
 }
 
-void uart_write_hex(uint8_t number)
+void uart_write_hex(number_t number)
 {
     digits dg = code_hex(number);
 
-    uart_write(dg.hundreds);
+    uart_write('x');
 
-    if(dg.tens != '0')
+    if(dg.hundreds != '0')
+        uart_write(dg.hundreds);
+
+    if(dg.hundreds != '0' || dg.tens != '0')
         uart_write(dg.tens);
 
     uart_write(dg.ones);

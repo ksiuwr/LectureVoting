@@ -1,9 +1,9 @@
 #ifndef I2C_H_
 #define I2C_H_
 
-#include <stdint.h>
 #include <util/delay.h>
 #include <util/twi.h>
+#include "types.h"
 #include "uart.h"
 
 #define I2C_DDR DDRC
@@ -17,7 +17,7 @@ typedef enum
     I2C_Read = 1  // mode bit for reading
 } i2c_mode;
 
-static inline void i2c_write(uint8_t value)
+static inline void i2c_write(character_t value)
 {
     TWDR = value;
     TWCR = (1 << TWINT) | (1 << TWEN);
