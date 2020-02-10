@@ -1,6 +1,8 @@
 #include "buttons.h"
+#include <stdint.h>
 #include <avr/io.h>
 #include <util/delay.h>
+#include "memory.h"
 
 #define BTN_DDR DDRB
 #define BTN_PORT PORTB

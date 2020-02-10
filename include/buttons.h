@@ -1,9 +1,6 @@
 #ifndef BUTTONS_H_
 #define BUTTONS_H_
 
-#include <stdint.h>
-#include "memory.h"
-
 typedef enum
 {
     VotedPlus = 0,

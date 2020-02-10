@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <util/delay.h>
 #include "buttons.h"
 #include "displayer.h"

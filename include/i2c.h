@@ -1,10 +1,10 @@
 #ifndef I2C_H_
 #define I2C_H_
 
+#include <stdint.h>
 #include <util/delay.h>
 #include <util/twi.h>
 #include "types.h"
-#include "uart.h"
 
 #define I2C_DDR DDRC
 #define I2C_PORT PORTC
