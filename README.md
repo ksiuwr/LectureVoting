@@ -39,7 +39,8 @@ The infinity symbol in the displayer informs that no votes will be counted at th
 ### Standard build & run
 Build process:
 + Linux-based operating system
-+ AVR GCC, AVR libc, AVRDude
++ AVR compilation utils: GCC AVR, AVR libc, AVRDude \
+  (`gcc-avr`, `binutils-avr`, `avr-libc`, `avrdude`)
 + GNU Make
 
 -----
