@@ -30,7 +30,7 @@ The infinity symbol in the displayer informs that no votes will be counted at th
 ### Datasheets (see `doc` directory)
 + Arduino with Atmega328p microcontroller
 + HD44780 liquid crystal displayer
-+ I2C converter for displayer based on PCF8574AT
++ I2C converter for displayer based on PCF8574
 
 -----
 
@@ -40,8 +40,9 @@ The infinity symbol in the displayer informs that no votes will be counted at th
 Build process:
 + Linux-based operating system
 + AVR compilation utils: GCC AVR, AVR libc, AVRDude \
-  (`gcc-avr`, `binutils-avr`, `avr-libc`, `avrdude`)
-+ GNU Make
+  \[APT packages `gcc-avr`, `binutils-avr`, `avr-libc`, `avrdude`\]
++ GNU Make \
+  \[APT package `make`\]
 
 -----
 
