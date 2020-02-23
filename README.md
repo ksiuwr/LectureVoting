@@ -21,8 +21,8 @@ The infinity symbol in the displayer informs that no votes will be counted at th
 
 ### Atmega / Arduino pinouts
 + PB0 / D8  - 'yes' vote button
-+ PB1 / D9  - 'no' vote button
-+ PB2 / D10 - 'don't care' vote button
++ PB1 / D9 - 'don't care' vote button
++ PB2 / D10  - 'no' vote button
 + PB4 / D12 - reset button
 + PC4 / A4 - Displayer data (SDA)
 + PC5 / A5 - Displayer clock (SCL)

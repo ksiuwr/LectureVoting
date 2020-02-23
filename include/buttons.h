@@ -4,8 +4,8 @@
 typedef enum
 {
     VotedPlus = 0,
-    VotedMinus = 1,
-    VotedEgal = 2,
+    VotedEgal = 1,
+    VotedMinus = 2,
     No = 5,
     Resetting = 6,
     Multiple = 7

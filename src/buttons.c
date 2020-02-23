@@ -2,86 +2,83 @@
 #include <stdint.h>
 #include <avr/io.h>
 #include <util/delay.h>
-#include "memory.h"
 
 #define BTN_DDR DDRB
 #define BTN_PORT PORTB
 #define BTN_PIN PINB
 
-#define PLUS_PIN PB0
-#define MINUS_PIN PB1
-#define EGAL_PIN PB2
-#define RESET_PIN PB4
+#define RESET_DDR DDRD
+#define RESET_PORT PORTD
+#define RESET_PIN PIND
 
-const uint8_t Mask = (1 << PLUS_PIN) | (1 << MINUS_PIN) | (1 << EGAL_PIN) | (1 << RESET_PIN);
+#define PLUS_PINOUT PB0
+#define EGAL_PINOUT PB1
+#define MINUS_PINOUT PB2
+#define RESET_PINOUT PD7
 
-pressed btn_release_(uint8_t button_pin)
+const uint8_t VotesMask = (1 << PLUS_PINOUT) | (1 << EGAL_PINOUT) | (1 << MINUS_PINOUT);
+const uint8_t ResetMask = (1 << RESET_PINOUT);
+
+pressed btn_handle_(uint8_t button_pin)
 {
+    uint8_t was_multiple = 0;
+
+    while(~BTN_PIN & VotesMask)
+    {
+        if((~BTN_PIN & VotesMask) != (1 << button_pin))
+            return Multiple;
+
+        _delay_us(200);
+    }
+
     switch(button_pin)
     {
-        case PLUS_PIN:
-            mem_inc_plus();
+        case PLUS_PINOUT:
             return VotedPlus;
 
-        case MINUS_PIN:
-            mem_inc_minus();
-            return VotedMinus;
-
-        case EGAL_PIN:
-            mem_inc_egal();
+        case EGAL_PINOUT:
             return VotedEgal;
 
-        case RESET_PIN:
-            mem_init();
-            return Resetting;
+        case MINUS_PINOUT:
+            return VotedMinus;
 
         default:
             return Multiple;
     }
 }
 
-pressed btn_handle_(uint8_t button_pin)
-{
-    uint8_t was_multiple = 0;
-
-    while(~BTN_PIN & Mask)
-    {
-        if((~BTN_PIN & Mask) != (1 << button_pin))
-        {
-            was_multiple = 1;
-            break;
-        }
-
-        _delay_us(200);
-    }
-
-    return was_multiple ? Multiple : btn_release_(button_pin);
-}
-
 void btn_init()
 {
-    BTN_DDR &= ~Mask;  // set DDR on button pins to input
-    BTN_PORT |= Mask;  // set PORT on buttons pins to pullup
+    /*
+     * set DDR on button pins to input
+     * set PORT on buttons pins to pullup
+     */
+
+    BTN_DDR &= ~VotesMask;
+    BTN_PORT |= VotesMask;
+
+    RESET_DDR &= ~ResetMask;
+    RESET_PORT |= ResetMask;
 }
 
 pressed btn_click()
 {
-    switch(~BTN_PIN & Mask)
+    if(RESET_PIN & ResetMask)
+        return Resetting;
+
+    switch(~BTN_PIN & VotesMask)
     {
         case 0:
             return No;
 
-        case 1 << PLUS_PIN:
-            return btn_handle_(PLUS_PIN);
+        case 1 << PLUS_PINOUT:
+            return btn_handle_(PLUS_PINOUT);
 
-        case 1 << MINUS_PIN:
-            return btn_handle_(MINUS_PIN);
+        case 1 << EGAL_PINOUT:
+            return btn_handle_(EGAL_PINOUT);
 
-        case 1 << EGAL_PIN:
-            return btn_handle_(EGAL_PIN);
-
-        case 1 << RESET_PIN:
-            return btn_handle_(RESET_PIN);
+        case 1 << MINUS_PINOUT:
+            return btn_handle_(MINUS_PINOUT);
 
         default:
             return Multiple;

@@ -6,14 +6,14 @@
 typedef struct
 {
     number_t plus;
-    number_t minus;
     number_t egal;
+    number_t minus;
 } memory;
 
 const memory * mem_get();
 void mem_init();
 void mem_inc_plus();
-void mem_inc_minus();
 void mem_inc_egal();
+void mem_inc_minus();
 
 #endif
