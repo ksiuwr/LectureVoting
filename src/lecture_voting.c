@@ -4,6 +4,7 @@
 #include "displayer.h"
 #include "memory.h"
 #include "show_displayer.h"
+#include "show_uart.h"
 #include "types.h"
 #include "uart.h"
 
@@ -16,6 +17,7 @@ int main()
     btn_init();
     disp_init();
     show_disp_all();
+    show_uart_all();
 
     while(1)
     {
@@ -26,6 +28,7 @@ int main()
                 {
                     mem_inc_plus();
                     show_disp_vote(PlacePlus, mem_get()->plus);
+                    show_uart_vote(SIGN_PLUS, mem_get()->plus);
                 }
 
                 break;
@@ -35,6 +38,7 @@ int main()
                 {
                     mem_inc_egal();
                     show_disp_vote(PlaceEgal, mem_get()->egal);
+                    show_uart_vote(SIGN_EGAL, mem_get()->egal);
                 }
 
                 break;
@@ -44,6 +48,7 @@ int main()
                 {
                     mem_inc_minus();
                     show_disp_vote(PlaceMinus, mem_get()->minus);
+                    show_uart_vote(SIGN_MINUS, mem_get()->minus);
                 }
 
                 break;
@@ -60,6 +65,7 @@ int main()
                 mem_init();
                 disp_clear_all();
                 show_disp_all();
+                show_uart_all();
                 break;
 
             case Multiple:
