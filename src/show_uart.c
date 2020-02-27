@@ -1,7 +1,7 @@
 #include "show_uart.h"
 #include "memory.h"
 
-#define SEND_VIA_UART 1
+#define SEND_VIA_UART 0
 
 void show_one_vote_(character_t sign, number_t value)
 {
