@@ -71,7 +71,7 @@ int main()
                 break;
         }
 
-        _delay_ms(50);
+        _delay_ms(200);
     }
 
     disp_end();

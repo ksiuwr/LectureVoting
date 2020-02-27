@@ -28,7 +28,7 @@ pressed btn_handle_(uint8_t button_pin)
         if((~BTN_PIN & VotesMask) != (1 << button_pin))
             return Multiple;
 
-        _delay_us(200);
+        _delay_ms(1);
     }
 
     switch(button_pin)
