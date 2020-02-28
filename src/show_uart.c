@@ -1,8 +1,6 @@
 #include "show_uart.h"
 #include "memory.h"
 
-#define SEND_VIA_UART 0
-
 void show_one_vote_(character_t sign, number_t value)
 {
     uart_write(sign);
@@ -11,7 +9,7 @@ void show_one_vote_(character_t sign, number_t value)
 
 void show_uart_vote(character_t sign, number_t value)
 {
-    if(SEND_VIA_UART)
+    if(UART_ENABLED)
     {
         show_one_vote_(sign, value);
         uart_write('\r');
@@ -21,7 +19,7 @@ void show_uart_vote(character_t sign, number_t value)
 
 void show_uart_all()
 {
-    if(SEND_VIA_UART)
+    if(UART_ENABLED)
     {
         const memory * m = mem_get();
 
@@ -37,7 +35,7 @@ void show_uart_all()
 
 void show_uart_error()
 {
-    if(SEND_VIA_UART)
+    if(UART_ENABLED)
     {
         uart_write(SignError[0]);
         uart_write(SignError[1]);
