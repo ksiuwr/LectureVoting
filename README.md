@@ -5,7 +5,7 @@
 Simple automated voting system for lectures
 
 ## About
-LectureVoting is a tool designed for collecting listener's votes on presented lecture. It is based on Atmega328p microcontroller that may be found on Arduino boards. It contains of three vote buttons ("yes", "no", "don't care"), a reset button (clears votes result) and a displayer. Voting results are shown live on the displayer and optionally send via UART to the associated computer. One can see them through `minicom` tool:
+LectureVoting is a tool designed for collecting listener's votes on presented lecture. It is based on Atmega328p microcontroller that may be found on Arduino boards. It contains of three vote buttons ("yes", "no", "don't care"), a reset button (clears votes result) and a displayer. Voting results are shown live on the displayer and optionally send via UART to an associated computer. One can see them through `minicom` tool:
 
 ```sh
 minicom -D /dev/ttyACM0 -b 9600
@@ -40,9 +40,9 @@ The infinity symbol in the displayer informs that no votes will be counted at th
 Build process:
 + Linux-based operating system
 + AVR compilation utils: GCC AVR, AVR libc, AVRDude \
-  \[APT packages `gcc-avr`, `binutils-avr`, `avr-libc`, `avrdude`\]
+  *((APT packages `gcc-avr`, `binutils-avr`, `avr-libc`, `avrdude`))*
 + GNU Make \
-  \[APT package `make`\]
+  *((APT package `make`))*
 
 -----
 
