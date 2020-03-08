@@ -5,7 +5,7 @@
 Simple automated voting system for lectures
 
 ## About
-LectureVoting is a tool designed for collecting listener's votes on presented lecture. It is based on Atmega328p microcontroller that may be found on Arduino boards. It contains of three vote buttons ('yes', 'no', 'don't care'), a reset button (clears votes result) and a displayer. Voting results are shown live on the displayer and send via UART to the associated computer. One can see them through `minicom` tool:
+LectureVoting is a tool designed for collecting listener's votes on presented lecture. It is based on Atmega328p microcontroller that may be found on Arduino boards. It contains of three vote buttons ("yes", "no", "don't care"), a reset button (clears votes result) and a displayer. Voting results are shown live on the displayer and optionally send via UART to the associated computer. One can see them through `minicom` tool:
 
 ```sh
 minicom -D /dev/ttyACM0 -b 9600
@@ -24,13 +24,13 @@ The infinity symbol in the displayer informs that no votes will be counted at th
 + PB1 / D9 - 'don't care' vote button
 + PB2 / D10  - 'no' vote button
 + PB4 / D12 - reset button
-+ PC4 / A4 - Displayer data (SDA)
-+ PC5 / A5 - Displayer clock (SCL)
++ PC4 / A4 - displayer data (SDA)
++ PC5 / A5 - displayer clock (SCL)
 
 ### Datasheets (see `doc` directory)
 + Arduino with Atmega328p microcontroller
 + HD44780 liquid crystal displayer
-+ I2C converter for displayer based on PCF8574
++ I2C converter for displayer based on PCF8574 or PCF8574A
 
 -----
 
@@ -55,4 +55,4 @@ Possible Make targets are:
 + `make refresh` - remove additional build files & compile source files
 
 ## How to deploy?
-First check if Arduino is connected via USB and `/dev/ttyACM0` is open. Then simply run `make install` command if sources have already been compiled. But if sources should be compiled before, then run `make reinstall` command.
+First check if Arduino is connected via USB and `/dev/ttyACM0` is open. Then simply run `make install` command if sources have already been compiled. But when sources should be compiled before, then run `make reinstall` command.
