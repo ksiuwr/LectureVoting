@@ -1,8 +1,5 @@
-# [ AVR C ]
-# C / AVR output
 bin/
 build/
 
-# Visual Studio Code
 .vscode
 *.code-workspace
