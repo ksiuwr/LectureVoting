@@ -5,7 +5,7 @@
 Simple automated voting system for lectures
 
 ## About
-LectureVoting is a tool designed for collecting listener's votes on presented lecture. It is based on Atmega328p microcontroller that may be found on Arduino boards. It contains of three vote buttons ("yes", "no", "don't care"), a reset button (clears votes result) and a displayer. Voting results are shown live on the displayer and optionally send via UART to an associated computer. One can see them through `minicom` tool:
+LectureVoting is a tool designed for collecting listener's votes on presented lecture. It is based on Atmega328p microcontroller that may be found on Arduino boards. It consists of three vote buttons ("yes", "no", "don't care"), a reset button (clears votes result) and a displayer. Voting results are shown live on the displayer and optionally send via UART to an associated computer. One can see them through `minicom` tool:
 
 ```sh
 minicom -D /dev/ttyACM0 -b 9600
@@ -49,10 +49,14 @@ Build process:
 ## How to build?
 LectureVoting can be built using **GNU Make**.
 
-Possible Make targets are:
+Possible Make targets for compilation are:
 + `make`, `make all` - compile source files
 + `make clean` - remove additional build files
 + `make refresh` - remove additional build files & compile source files
 
 ## How to deploy?
-First check if Arduino is connected via USB and `/dev/ttyACM0` is open. Then simply run `make install` command if sources have already been compiled. But when sources should be compiled before, then run `make reinstall` command.
+First check if Arduino is connected via USB and `/dev/ttyACM0` is open. Deployment is performed via **GNU Make** as well.
+
+Possible Make targets for deployment are:
++ `make install` - deploy compiled object to Atmega
++ `make reinstall` - remove additional build files & compile source files & deploy compiled object to Atmega
