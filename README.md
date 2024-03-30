@@ -34,15 +34,12 @@ The infinity symbol in the displayer informs that no votes will be counted at th
 
 -----
 
-## Dependencies
-
-### Standard build & run
-Build process:
+## System requirements
 + Linux-based operating system
 + AVR compilation utils: GCC AVR, AVR libc, AVRDude \
-  *((APT packages `gcc-avr`, `binutils-avr`, `avr-libc`, `avrdude`))*
+  *APT packages `gcc-avr`, `binutils-avr`, `avr-libc`, `avrdude`*
 + GNU Make \
-  *((APT package `make`))*
+  *APT package `make`*
 
 -----
 
